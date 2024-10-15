@@ -6,7 +6,7 @@ body {
 
 header {
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgb(8,32,41);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -21,7 +21,7 @@ header {
 
 #all_content {
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgb(15, 66, 86);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -44,7 +44,7 @@ header {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: rgb(51, 240, 88);
+    background-color: rgb(8,32,41);
     padding: 0 4px;
 }
 
@@ -69,7 +69,7 @@ header {
 .actual_pokemon_type {
     height: 25%;
     width: 100%;
-    background-color: rgb(51, 240, 88);
+    background-color: rgb(8,32,41);
     display: flex;
     flex-direction: row;
     align-items: center;
