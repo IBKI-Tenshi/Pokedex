@@ -1,6 +1,6 @@
+// Funktion, die den HTML-Container für jedes Pokémon erstellt
 function getLittleContainer(pokemon, img_URL, types) {
-    // Extrahiere die ID aus der URL
-    let pokemonId = pokemon.url.split("/")[6];
+    let pokemonId = pokemon.url.split("/")[6];  // Pokémon-ID extrahieren
     
     return `
         <div class="pokemon_container_little">
@@ -12,7 +12,7 @@ function getLittleContainer(pokemon, img_URL, types) {
                 <img src="${img_URL}${pokemonId}.png" alt="${pokemon.name}">
             </div>
             <div class="actual_pokemon_type">
-                ${types}
+                ${getTypeImages(types)}  <!-- Ruft die Funktion auf, um Typ-Bilder zu laden -->
             </div>
         </div>
     `;

@@ -20,7 +20,7 @@ header {
 }
 
 #all_content {
-    height: 100vh;
+
     width: 100%;
     background-color: rgba(0, 0, 0, 0.9);
     display: flex;
@@ -45,6 +45,20 @@ header {
 }
 
 .img_little {
-    height: 200px;
+    height: 100px;
     width: 100%;
+}
+
+.actual_pokemon_type {
+    height: 100px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.actual_pokemon_type img {
+    height: 50px;
+    width: 50px;
 }
