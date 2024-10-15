@@ -1,4 +1,4 @@
-function getLittleContainer(pokemon, img_URL) {
+function getLittleContainer(pokemon, img_URL, types) {
     // Extrahiere die ID aus der URL
     let pokemonId = pokemon.url.split("/")[6];
     
@@ -12,7 +12,7 @@ function getLittleContainer(pokemon, img_URL) {
                 <img src="${img_URL}${pokemonId}.png" alt="${pokemon.name}">
             </div>
             <div class="actual_pokemon_type">
-                actual type
+                ${types}
             </div>
         </div>
     `;
