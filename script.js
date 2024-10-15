@@ -21,7 +21,7 @@ async function loadData(path) {
 // Pokémon- und Typ-Daten laden
 async function loadActualShownPokemon() {
     let allPokemon = await loadData("pokemon?limit=100000&offset=0");
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 20; i++) {
         actualShownPokemon.push(allPokemon[i]);
         await loadPokemonTypes(allPokemon[i].url);  // Typen für jedes Pokémon laden
     }

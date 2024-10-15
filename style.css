@@ -20,38 +20,56 @@ header {
 }
 
 #all_content {
-
     width: 100%;
     background-color: rgba(0, 0, 0, 0.9);
     display: flex;
-    flex-direction: row; 
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-
 }
 
 .pokemon_container_little {
-    width: 200px;
-    height: 300px;
-    background-color: rgba(0, 0, 255, 0.316);
-    margin: 4px;
+    width: 160px;
+    height: 200px;
+    background-color: rgba(144, 144, 205, 0.316);
+    margin: 8px;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .id_and_name {
+    height: 15%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    background-color: green;
+    padding: 0 4px;
+}
+
+.pokemon_id {
+    margin: 4px;
+}
+
+.pokemon_name {
+    margin: 4px;
 }
 
 .img_little {
-    height: 100px;
+    height: 60%;
+    width: 100%;
+}
+
+.img_little img {
+    height: 100%;
     width: 100%;
 }
 
 .actual_pokemon_type {
-    height: 100px;
+    height: 25%;
     width: 100%;
+    background-color: rgba(255, 166, 0, 0.5);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -59,6 +77,6 @@ header {
 }
 
 .actual_pokemon_type img {
-    height: 50px;
-    width: 50px;
+    margin: 0 4px;
+    height: 70%;
 }
