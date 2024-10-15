@@ -2,8 +2,10 @@
 
 let BASE_URL = "https://pokeapi.co/api/v2/";
 
-let actuallShownPokemon = [];
+let img_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 
+let actuallShownPokemon = [];
+let actuallShownPokemonTypes = [];
 
 
 async function init() {
@@ -14,7 +16,6 @@ async function init() {
 }
 
 async function loadData(path) {
-
     let data = await fetch(BASE_URL + path + ".json");
     let dataToJson = await data.json();
     return dataToJson.results;
@@ -28,31 +29,14 @@ async function loadActullShownPokemon() {
     console.log(actuallShownPokemon);
 }
 
-function renderPokemonName() {
-    actuallShownPokemon.forEach(pokemon => {
-        console.log(pokemon.name);
-    });
-
-    document.getElementById('pokemon_name').innerHTML = actuallShownPokemon[0].name;
-}
-
-async function renderPokemonUrl() {
-    actuallShownPokemon.forEach(pokemon => {
-        console.log(pokemon.url);
-    });
-}
-
 async function renderLittleContainer() {
-    // Hole das Element, in das die Container eingefügt werden sollen
     let allContent = document.getElementById('all_content');
-    
-    // Lösche den bestehenden Inhalt, falls vorhanden
     allContent.innerHTML = '';
 
     // Iteriere über das actuallShownPokemon Array
     actuallShownPokemon.forEach(pokemon => {
         // Rufe die Funktion getLittleContainer() auf und füge den HTML-Code hinzu
-        let pokemonContainer = getLittleContainer(pokemon);
+        let pokemonContainer = getLittleContainer(pokemon, img_URL);
         allContent.innerHTML += pokemonContainer; // Füge den HTML-String hinzu
     });
 }
