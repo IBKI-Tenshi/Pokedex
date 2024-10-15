@@ -1,17 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex</title>
 
+    <link href="./style.css" rel="stylesheet" href="text/css">
 
+    <script src="./script.js"></script>
+    <script src="./src/js/templates.js"></script>
 
 
 </head>
 
-<body>
-    
+<body onload="init()">
+
+    <header>
+        <div id="title_div">
+            <img src="#" alt="Pokeball_img">
+            <h1>Pokedex</h1>
+        </div>
+
+        <p>suchleiste</p>
+    </header>
+
+    <div id="all_content">
+        <div class="pokemon_container_little">
+            <div class="id_and_name">
+                <p id="pokemon_id">nummer/id</p>
+                <p id="pokemon_name">name</p>
+            </div>
+            <div class="img_little">
+                <img src="#" alt="aktuelles_pokemon">
+            </div>
+            <div class="actual_pokemon_type">
+                actual type
+            </div>
+        </div>
+    </div>
+
+
+
 </body>
 
 </html>
