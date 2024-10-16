@@ -4,11 +4,15 @@ function getLittleContainer(pokemon, img_URL, types) {
     let primaryType = types[0]; // Nimm den ersten Typ aus der Liste
     let backgroundColor = typeBackground[primaryType] || "#FFF";
 
+
+    // console.log(pokemon);
+    
+
     return `
         <div class="pokemon_container_little" style="background-color: ${backgroundColor};" onclick="toggle_overlay(); renderBigContainer('${backgroundColor}', ${pokemonId}, '${pokemon.name}', ['${types.join("','")}']);">
             <div class="id_and_name">
                 <p class="pokemon_id">#${pokemonId}</p>
-                <p class="pokemon_name">${pokemon.name}</p>
+                <h3 class="pokemon_name">${pokemon.name}</h3>
             </div>
             <div class="img_little">
                 <img src="${img_URL}${pokemonId}.png" alt="${pokemon.name}">
@@ -21,13 +25,11 @@ function getLittleContainer(pokemon, img_URL, types) {
 }
 
 function getBigContainer(backgroundColor, pokemonId, pokemonName, types) {
-
-
     return `
     <div class="pokemon_container_big" style="background-color: ${backgroundColor};" onclick="event.stopPropagation()">
         <div class="id_and_name_big">
             <p class="pokemon_id_big">#${pokemonId}</p>
-            <p class="pokemon_name_big">${pokemonName}</p>
+            <h2 class="pokemon_name_big">${pokemonName}</h2>
         </div>
         <div class="img_big">
             <img src="${img_URL}${pokemonId}.png" alt="${pokemonName}">
@@ -36,17 +38,28 @@ function getBigContainer(backgroundColor, pokemonId, pokemonName, types) {
             ${getTypeImages(types)}
         </div>
         <div class="info_menu">
-            <div>main</div>
-            <div>stats</div>
-            <div>evo chain</div>
+            <a class="info_menu_button">
+                <h4>main</h4>
+            </a>
+            <a class="info_menu_button border_l_r">
+                <h4>stats</h4>
+            </a>
+            <a class="info_menu_button">
+                <h4>evo chain</h4>
+            </a>
         </div>
-        <div class="info_div">
-            infos
+        <div class="info_content">
+            ${renderInfoContent(pokemonId - 1)}
         </div>
         <div class="back_next_buttons_div">
-            <a class="button" onclick="previousPokemon()">back</a>
-            <a class="button" onclick="nextPokemon()">next</a>
+            <a class="toggle_pokemon_button" onclick="previousPokemon(${pokemonId})">back</a>
+            <a class="toggle_pokemon_button" onclick="nextPokemon(${pokemonId})">next</a>
         </div>
     </div>
     `;
+}
+
+// Funktion, die die Typ-Bilder basierend auf den Typen anzeigt
+function getTypeImages(types) {
+    return types.map(type => `<img src="${typeImg_URL}${type}.png" alt="${type}">`).join(" ");
 }

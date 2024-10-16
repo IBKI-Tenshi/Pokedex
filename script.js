@@ -22,14 +22,9 @@ async function loadActualShownPokemon() {
 
 // Pokémon-Typen aus der API abrufen
 async function loadPokemonTypes(url) {
-    let pokemonData = await fetch(url).then(res => res.json());
+    let pokemonData = await fetch(url).then(res => res.json());    
     let types = pokemonData.types.map(typeInfo => typeInfo.type.name);
     actualShownPokemonTypes.push(types);  // Typen als Array speichern
-}
-
-// Funktion, die die Typ-Bilder basierend auf den Typen anzeigt
-function getTypeImages(types) {
-    return types.map(type => `<img src="${typeImg_URL}${type}.png" alt="${type}">`).join(" ");
 }
 
 // Container für alle Pokémon rendern
@@ -62,37 +57,45 @@ async function renderBigContainer(backgroundColor, pokemonId, pokemonName, types
     overlayContent.innerHTML = pokemonContainerBig;
 }
 
-let currentPokemonIndex = 0; // Variable zum Speichern des aktuellen Pokémon-Index
-
-// Zeige das vorherige Pokémon an
-function previousPokemon() {
+function previousPokemon(pokemonId) {
+    let currentPokemonIndex = pokemonId - 1;
     if (currentPokemonIndex > 0) {
-        currentPokemonIndex--;  // Gehe zum vorherigen Pokémon
+        currentPokemonIndex--;
     } else {
-        currentPokemonIndex = actualShownPokemon.length - 1;  // Springe zum letzten Pokémon
+        currentPokemonIndex = actualShownPokemon.length - 1;
     }
-    showPokemonInOverlay(currentPokemonIndex);  // Zeige das Pokémon im Overlay an
+    showPokemonInOverlay(currentPokemonIndex);
 }
 
-// Zeige das nächste Pokémon an
-function nextPokemon() {
+function nextPokemon(pokemonId) {
+    let currentPokemonIndex = pokemonId - 1;
     if (currentPokemonIndex < actualShownPokemon.length - 1) {
-        currentPokemonIndex++;  // Gehe zum nächsten Pokémon
+        currentPokemonIndex++;
     } else {
-        currentPokemonIndex = 0;  // Springe zum ersten Pokémon
+        currentPokemonIndex = 0;
     }
-    showPokemonInOverlay(currentPokemonIndex);  // Zeige das Pokémon im Overlay an
+    showPokemonInOverlay(currentPokemonIndex);
 }
 
-// Hilfsfunktion, um das Pokémon im Overlay zu zeigen
 function showPokemonInOverlay(index) {
     let selectedPokemon = actualShownPokemon[index];
     let selectedPokemonTypes = actualShownPokemonTypes[index];
-    let backgroundColor = typeBackground[selectedPokemonTypes[0]] || "#FFF"; // Nimm den ersten Typ für die Hintergrundfarbe
+    let backgroundColor = typeBackground[selectedPokemonTypes[0]] || "#FFF";
     let pokemonId = selectedPokemon.url.split("/")[6];
     let pokemonName = selectedPokemon.name;
     let types = selectedPokemonTypes;
 
-    // Render das Pokémon mit der `renderBigContainer`-Funktion
     renderBigContainer(backgroundColor, pokemonId, pokemonName, types);
+}
+
+async function loadInfoContent(path) {
+
+    
+    let infoData = await fetch(actualShownPokemon[path].url).then(res => res.json());
+
+    console.log(infoData);
+    
+
+    // let types = infoData.types.map(typeInfo => typeInfo.type.name);
+    // actualShownPokemonTypes.push(types);
 }
