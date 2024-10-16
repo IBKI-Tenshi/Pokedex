@@ -38,10 +38,10 @@ function getBigContainer(backgroundColor, pokemonId, pokemonName, types) {
             ${getTypeImages(types)}
         </div>
         <div class="info_menu">
-            <a class="info_menu_button">
+            <a class="info_menu_button" onclick="getInfoContent(${pokemonId - 1})">
                 <h4>main</h4>
             </a>
-            <a class="info_menu_button border_l_r">
+            <a class="info_menu_button border_l_r" onclick="getInfoContent(${pokemonId - 1})">
                 <h4>stats</h4>
             </a>
             <a class="info_menu_button">
@@ -50,7 +50,7 @@ function getBigContainer(backgroundColor, pokemonId, pokemonName, types) {
         </div>
         <div class="info_content" id="info_content">
             aaa
-            ${getInfoContent(pokemonId - 1)}
+            {getInfoContent()}
         </div>
         <div class="back_next_buttons_div">
             <a class="toggle_pokemon_button" onclick="previousPokemon(${pokemonId})">back</a>
@@ -65,20 +65,20 @@ function getTypeImages(types) {
     return types.map(type => `<img src="${typeImg_URL}${type}.png" alt="${type}">`).join(" ");
 }
 
-function getInfoContentMain() {
+function getInfoContentMain(height, weight, baseExperience) {
     return `
         <table class="info_table">
         <tr>
             <td>Height</td>
-            <td>A</td>
+            <td>${height}</td>
         </tr>
         <tr>
             <td>Weight</td>
-            <td>b</td>
+            <td>${weight}</td>
         </tr>
         <tr>
             <td>Base Experience</td>
-            <td>c</td>
+            <td>${baseExperience}</td>
         </tr>
         <tr>
             <td>Abilities</td>
@@ -88,7 +88,7 @@ function getInfoContentMain() {
     `;
 }
 
-function getInfoContentStats(path) {
+function getInfoContentStats() {
     return`
         <table class="info_table">
         <tr>

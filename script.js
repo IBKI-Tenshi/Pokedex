@@ -55,6 +55,8 @@ async function renderBigContainer(backgroundColor, pokemonId, pokemonName, types
 
     let pokemonContainerBig = getBigContainer(backgroundColor, pokemonId, pokemonName, types);
     overlayContent.innerHTML = pokemonContainerBig;
+
+    renderInfoContent(pokemonId - 1)
 }
 
 function previousPokemon(pokemonId) {
@@ -88,35 +90,52 @@ function showPokemonInOverlay(index) {
     renderBigContainer(backgroundColor, pokemonId, pokemonName, types);
 }
 
-async function loadInfoContent(path) {
-    let infoData = await fetch(actualShownPokemon[path].url).then(res => res.json());
+async function renderInfoContent(path) {
 
-    console.log(infoData);
-    console.log(infoData.height);
-    console.log(infoData.weight);
-    console.log(infoData.base_experience);
+    let infoDataToJson = await loadInfoContent(path);
 
-    console.log(infoData.abilities);
-    console.log(infoData.abilities[0]);
-    console.log(infoData.abilities[0].ability);
-    console.log(infoData.abilities[0].ability.name);
-}
+    // console.log(infoDataToJson);
+    // console.log(infoDataToJson.height);
+    // console.log(infoDataToJson.weight);
+    // console.log(infoDataToJson.base_experience);
 
-async function getInfoContent(path) {
-    console.log(path);
+    // console.log(infoDataToJson.abilities);
+    // console.log(infoDataToJson.abilities[0]);
+    // console.log(infoDataToJson.abilities[0].ability);
+    // console.log(infoDataToJson.abilities[0].ability.name);
     
-    await loadInfoContent(path);
+
+    let height = infoDataToJson.height;
+    let weight = infoDataToJson.weight;
+    let baseExperience = infoDataToJson.base_experience;
+
+    console.log(height);
+    console.log(weight);
+    console.log(baseExperience);
+    
 
     let infoContent = document.getElementById('info_content');
     console.log(infoContent);
     
     infoContent.innerHTML = '';
-    infoContent.innerHTML = getInfoContentMain();
+    infoContent.innerHTML = getInfoContentMain(height, weight, baseExperience);
+
+}
+
+async function loadInfoContent(path) {
+    let infoData = await fetch(actualShownPokemon[path].url);
+    let infoDataToJson = await infoData.json();
+    
+    console.log(infoDataToJson);
+
+    return infoDataToJson;
+}
+
+function getInfoContent() {
+    console.log("ich habe keine lust mehr");
 
 
-
-
-   
+    
 }
 
 
