@@ -22,7 +22,7 @@ async function loadActualShownPokemon() {
 
 // Pokémon-Typen aus der API abrufen
 async function loadPokemonTypes(url) {
-    let pokemonData = await fetch(url).then(res => res.json());    
+    let pokemonData = await fetch(url).then(res => res.json());
     let types = pokemonData.types.map(typeInfo => typeInfo.type.name);
     actualShownPokemonTypes.push(types);  // Typen als Array speichern
 }
@@ -89,13 +89,34 @@ function showPokemonInOverlay(index) {
 }
 
 async function loadInfoContent(path) {
-
-    
     let infoData = await fetch(actualShownPokemon[path].url).then(res => res.json());
 
     console.log(infoData);
-    
+    console.log(infoData.height);
+    console.log(infoData.weight);
+    console.log(infoData.base_experience);
 
-    // let types = infoData.types.map(typeInfo => typeInfo.type.name);
-    // actualShownPokemonTypes.push(types);
+    console.log(infoData.abilities);
+    console.log(infoData.abilities[0]);
+    console.log(infoData.abilities[0].ability);
+    console.log(infoData.abilities[0].ability.name);
 }
+
+async function getInfoContent(path) {
+    console.log(path);
+    
+    await loadInfoContent(path);
+
+    let infoContent = document.getElementById('info_content');
+    console.log(infoContent);
+    
+    infoContent.innerHTML = '';
+    infoContent.innerHTML = getInfoContentMain();
+
+
+
+
+   
+}
+
+

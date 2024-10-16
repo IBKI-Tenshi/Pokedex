@@ -48,8 +48,9 @@ function getBigContainer(backgroundColor, pokemonId, pokemonName, types) {
                 <h4>evo chain</h4>
             </a>
         </div>
-        <div class="info_content">
-            ${renderInfoContent(pokemonId - 1)}
+        <div class="info_content" id="info_content">
+            aaa
+            ${getInfoContent(pokemonId - 1)}
         </div>
         <div class="back_next_buttons_div">
             <a class="toggle_pokemon_button" onclick="previousPokemon(${pokemonId})">back</a>
@@ -63,3 +64,62 @@ function getBigContainer(backgroundColor, pokemonId, pokemonName, types) {
 function getTypeImages(types) {
     return types.map(type => `<img src="${typeImg_URL}${type}.png" alt="${type}">`).join(" ");
 }
+
+function getInfoContentMain() {
+    return `
+        <table class="info_table">
+        <tr>
+            <td>Height</td>
+            <td>A</td>
+        </tr>
+        <tr>
+            <td>Weight</td>
+            <td>b</td>
+        </tr>
+        <tr>
+            <td>Base Experience</td>
+            <td>c</td>
+        </tr>
+        <tr>
+            <td>Abilities</td>
+            <td>b</td>
+        </tr>
+    </table>
+    `;
+}
+
+function getInfoContentStats(path) {
+    return`
+        <table class="info_table">
+        <tr>
+            <td>HP</td>
+            <td>A</td>
+        </tr>
+        <tr>
+            <td>Attack</td>
+            <td>b</td>
+        </tr>
+        <tr>
+            <td>Defense</td>
+            <td>c</td>
+        </tr>
+                <tr>
+            <td>Special-Attack</td>
+            <td>b</td>
+        </tr>
+        <tr>
+            <td>Special-Defense</td>
+            <td>c</td>
+        </tr>
+        <tr>
+            <td>Speed</td>
+            <td>d</td>
+        </tr>
+    </table>
+    `;
+}
+
+function getInfoContentEvoChain(path) {
+
+}
+
