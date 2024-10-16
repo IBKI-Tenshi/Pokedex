@@ -1,0 +1,101 @@
+#overlay {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.d_none {
+    display: none !important;
+}
+
+.pokemon_container_big {
+    width: 400px;
+    height: 500px;
+    background-color: rgb(68, 68, 167);
+    margin: 8px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.id_and_name_big {
+    height: 15%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(8,32,41);
+    padding: 0 4px;
+}
+
+.pokemon_id_big {
+    margin: 4px;
+}
+
+.pokemon_name_big {
+    margin: 4px;
+}
+
+.img_big {
+    height: 20%;
+    width: 100%;
+}
+
+.img_big img {
+    height: 100%;
+    width: 100%;
+}
+
+.actual_pokemon_type_big {
+    height: 15%;
+    width: 100%;
+    background-color: rgb(8,32,41);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.actual_pokemon_type_big img {
+    margin: 0 4px;
+    height: 70%;
+}
+
+.info_menu {
+    width: 100%;
+    height: 60px;
+    background-color: rgb(39, 90, 160);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.info_div {
+    width: 100%;
+    height: 10%;
+    background-color: rgb(33, 147, 209);
+}
+
+.back_next_buttons_div {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rebeccapurple;
+}
+
+.button {
+    height: 30px;
+    width: 30px;
+    background-color: red;
+    text-decoration: none;
+    margin: 0 8px;
+    color: white;
+}

@@ -2,6 +2,7 @@ body {
     margin: 0;
     width: 100%;
     color: white;
+    background-color: rgb(15, 66, 86);
 }
 
 header {
@@ -21,7 +22,6 @@ header {
 
 #all_content {
     width: 100%;
-    background-color: rgb(15, 66, 86);
     display: flex;
     flex-direction: row;
     align-items: center;
