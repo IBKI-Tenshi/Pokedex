@@ -38,10 +38,10 @@ function getBigContainer(backgroundColor, pokemonId, pokemonName, types) {
             ${getTypeImages(types)}
         </div>
         <div class="info_menu">
-            <a class="info_menu_button" onclick="getInfoContent(${pokemonId - 1})">
+            <a class="info_menu_button" onclick="getInfoContent('${pokemonId - 1}', '${1}')">
                 <h4>main</h4>
             </a>
-            <a class="info_menu_button border_l_r" onclick="getInfoContent(${pokemonId - 1})">
+            <a class="info_menu_button border_l_r" onclick="getInfoContent('${pokemonId - 1}', '${2}')">
                 <h4>stats</h4>
             </a>
             <a class="info_menu_button">
@@ -65,7 +65,7 @@ function getTypeImages(types) {
     return types.map(type => `<img src="${typeImg_URL}${type}.png" alt="${type}">`).join(" ");
 }
 
-function getInfoContentMain(height, weight, baseExperience) {
+function getInfoContentMain(height, weight, baseExperience, abilities) {
     return `
         <table class="info_table">
         <tr>
@@ -82,38 +82,40 @@ function getInfoContentMain(height, weight, baseExperience) {
         </tr>
         <tr>
             <td>Abilities</td>
-            <td>b</td>
+            <td>${abilities}</td>
         </tr>
     </table>
     `;
 }
 
-function getInfoContentStats() {
+
+
+function getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed) {
     return`
         <table class="info_table">
         <tr>
             <td>HP</td>
-            <td>A</td>
+            <td>${HP}</td>
         </tr>
         <tr>
             <td>Attack</td>
-            <td>b</td>
+            <td>${ATK}</td>
         </tr>
         <tr>
             <td>Defense</td>
-            <td>c</td>
+            <td>${DEF}</td>
         </tr>
                 <tr>
             <td>Special-Attack</td>
-            <td>b</td>
+            <td>${specATK}</td>
         </tr>
         <tr>
             <td>Special-Defense</td>
-            <td>c</td>
+            <td>${specDEF}</td>
         </tr>
         <tr>
             <td>Speed</td>
-            <td>d</td>
+            <td>${Speed}</td>
         </tr>
     </table>
     `;

@@ -94,48 +94,74 @@ async function renderInfoContent(path) {
 
     let infoDataToJson = await loadInfoContent(path);
 
-    // console.log(infoDataToJson);
-    // console.log(infoDataToJson.height);
-    // console.log(infoDataToJson.weight);
-    // console.log(infoDataToJson.base_experience);
-
-    // console.log(infoDataToJson.abilities);
-    // console.log(infoDataToJson.abilities[0]);
-    // console.log(infoDataToJson.abilities[0].ability);
-    // console.log(infoDataToJson.abilities[0].ability.name);
-    
-
-    let height = infoDataToJson.height;
-    let weight = infoDataToJson.weight;
-    let baseExperience = infoDataToJson.base_experience;
-
-    console.log(height);
-    console.log(weight);
-    console.log(baseExperience);
-    
-
-    let infoContent = document.getElementById('info_content');
-    console.log(infoContent);
-    
-    infoContent.innerHTML = '';
-    infoContent.innerHTML = getInfoContentMain(height, weight, baseExperience);
-
+    getInfoContent(infoDataToJson);
 }
 
 async function loadInfoContent(path) {
     let infoData = await fetch(actualShownPokemon[path].url);
     let infoDataToJson = await infoData.json();
-    
+
     console.log(infoDataToJson);
 
     return infoDataToJson;
 }
 
-function getInfoContent() {
-    console.log("ich habe keine lust mehr");
+async function renderInfoMain(infoDataToJson) {
+
+    let height = infoDataToJson.height;
+    let weight = infoDataToJson.weight;
+    let baseExperience = infoDataToJson.base_experience;
+    let abilities = infoDataToJson.abilities.map(abilityInfo => abilityInfo.ability.name).join(', ');
+
+    let infoContent = document.getElementById('info_content');
+    console.log(infoContent);
+
+    infoContent.innerHTML = '';
+    infoContent.innerHTML = getInfoContentMain(height, weight, baseExperience, abilities);
+
+}
+
+async function renderInfoStats(infoDataToJson) {
+
+    let HP = infoDataToJson.stats[0].base_stat;
+    let ATK = infoDataToJson.stats[1].base_stat;
+    let DEF = infoDataToJson.stats[2].base_stat;
+    let specATK = infoDataToJson.stats[3].base_stat;
+    let specDEF = infoDataToJson.stats[4].base_stat;
+    let Speed = infoDataToJson.stats[5].base_stat;
+
+    let infoContent = document.getElementById('info_content');
+    console.log(infoContent);
+
+    infoContent.innerHTML = '';
+    infoContent.innerHTML = getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed);
+
+}
+
+async function renderInfoEvoChain(infoDataToJson) { }
 
 
-    
+
+
+
+
+async function getInfoContent(infoDataToJson, FunctionID) {
+
+    // let selector = 1;
+
+    let selector = FunctionID;
+
+    if (selector = 1) {
+        renderInfoMain(infoDataToJson);
+    } else {
+        if (selector = 2) {
+            renderInfoStats(infoDataToJson);
+        } else {
+            renderInfoEvoChain(infoDataToJson);
+        }
+    }
+
+
 }
 
 
