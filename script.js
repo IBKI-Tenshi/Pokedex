@@ -53,10 +53,83 @@ async function renderBigContainer(backgroundColor, pokemonId, pokemonName, types
     let overlayContent = document.getElementById('overlay');
     overlayContent.innerHTML = '';
 
+    renderInfoContent(pokemonId - 1, 1)
+
+    console.log(pokemonId - 1);
+    
+
     let pokemonContainerBig = getBigContainer(backgroundColor, pokemonId, pokemonName, types);
     overlayContent.innerHTML = pokemonContainerBig;
 
-    renderInfoContent(pokemonId - 1)
+}
+
+async function renderInfoContent(path, infoID) {
+
+    let infoDataToJson = await loadInfoContent(path);
+
+    console.log(path);
+    
+
+    getInfoContent(infoDataToJson, infoID);
+}
+
+async function loadInfoContent(path) {
+    let infoData = await fetch(actualShownPokemon[path].url);
+    let infoDataToJson = await infoData.json();
+
+    console.log(infoDataToJson, 1);
+
+    return infoDataToJson;
+}
+
+async function renderInfoMain(infoDataToJson) {
+
+    let height = infoDataToJson.height;
+    let weight = infoDataToJson.weight;
+    let baseExperience = infoDataToJson.base_experience;
+    let abilities = infoDataToJson.abilities.map(abilityInfo => abilityInfo.ability.name).join(', ');
+
+    let infoContent = document.getElementById('info_content');
+    console.log(infoContent);
+
+    infoContent.innerHTML = '';
+    infoContent.innerHTML = getInfoContentMain(height, weight, baseExperience, abilities);
+}
+
+async function renderInfoStats(infoDataToJson) {
+
+    let HP = infoDataToJson.stats[0].base_stat;
+    let ATK = infoDataToJson.stats[1].base_stat;
+    let DEF = infoDataToJson.stats[2].base_stat;
+    let specATK = infoDataToJson.stats[3].base_stat;
+    let specDEF = infoDataToJson.stats[4].base_stat;
+    let Speed = infoDataToJson.stats[5].base_stat;
+
+    let infoContent = document.getElementById('info_content');
+    console.log(infoContent);
+
+    infoContent.innerHTML = '';
+    infoContent.innerHTML = getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed);
+}
+
+async function renderInfoEvoChain(infoDataToJson) { }
+
+
+async function getInfoContent(infoDataToJson, infoId) {
+
+
+    let selector = infoId;
+
+    if (selector == 1) {
+        renderInfoMain(infoDataToJson);
+    } else {
+        if (selector == 2) {
+            renderInfoStats(infoDataToJson);
+        } else {
+            renderInfoEvoChain(infoDataToJson);
+        }
+    }
+
 }
 
 function previousPokemon(pokemonId) {
@@ -88,80 +161,6 @@ function showPokemonInOverlay(index) {
     let types = selectedPokemonTypes;
 
     renderBigContainer(backgroundColor, pokemonId, pokemonName, types);
-}
-
-async function renderInfoContent(path) {
-
-    let infoDataToJson = await loadInfoContent(path);
-
-    getInfoContent(infoDataToJson);
-}
-
-async function loadInfoContent(path) {
-    let infoData = await fetch(actualShownPokemon[path].url);
-    let infoDataToJson = await infoData.json();
-
-    console.log(infoDataToJson);
-
-    return infoDataToJson;
-}
-
-async function renderInfoMain(infoDataToJson) {
-
-    let height = infoDataToJson.height;
-    let weight = infoDataToJson.weight;
-    let baseExperience = infoDataToJson.base_experience;
-    let abilities = infoDataToJson.abilities.map(abilityInfo => abilityInfo.ability.name).join(', ');
-
-    let infoContent = document.getElementById('info_content');
-    console.log(infoContent);
-
-    infoContent.innerHTML = '';
-    infoContent.innerHTML = getInfoContentMain(height, weight, baseExperience, abilities);
-
-}
-
-async function renderInfoStats(infoDataToJson) {
-
-    let HP = infoDataToJson.stats[0].base_stat;
-    let ATK = infoDataToJson.stats[1].base_stat;
-    let DEF = infoDataToJson.stats[2].base_stat;
-    let specATK = infoDataToJson.stats[3].base_stat;
-    let specDEF = infoDataToJson.stats[4].base_stat;
-    let Speed = infoDataToJson.stats[5].base_stat;
-
-    let infoContent = document.getElementById('info_content');
-    console.log(infoContent);
-
-    infoContent.innerHTML = '';
-    infoContent.innerHTML = getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed);
-
-}
-
-async function renderInfoEvoChain(infoDataToJson) { }
-
-
-
-
-
-
-async function getInfoContent(infoDataToJson, FunctionID) {
-
-    // let selector = 1;
-
-    let selector = FunctionID;
-
-    if (selector = 1) {
-        renderInfoMain(infoDataToJson);
-    } else {
-        if (selector = 2) {
-            renderInfoStats(infoDataToJson);
-        } else {
-            renderInfoEvoChain(infoDataToJson);
-        }
-    }
-
-
 }
 
 

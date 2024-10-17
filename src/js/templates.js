@@ -25,6 +25,10 @@ function getLittleContainer(pokemon, img_URL, types) {
 }
 
 function getBigContainer(backgroundColor, pokemonId, pokemonName, types) {
+
+    let mainInfo = 1;
+    let statsInfo = 2;
+    // let EvoChain = 3;
     return `
     <div class="pokemon_container_big" style="background-color: ${backgroundColor};" onclick="event.stopPropagation()">
         <div class="id_and_name_big">
@@ -38,10 +42,10 @@ function getBigContainer(backgroundColor, pokemonId, pokemonName, types) {
             ${getTypeImages(types)}
         </div>
         <div class="info_menu">
-            <a class="info_menu_button" onclick="getInfoContent('${pokemonId - 1}', '${1}')">
+            <a class="info_menu_button" onclick="renderInfoContent(${pokemonId - 1}, ${mainInfo})">
                 <h4>main</h4>
             </a>
-            <a class="info_menu_button border_l_r" onclick="getInfoContent('${pokemonId - 1}', '${2}')">
+            <a class="info_menu_button border_l_r" onclick="renderInfoContent(${pokemonId - 1}, '${statsInfo}')">
                 <h4>stats</h4>
             </a>
             <a class="info_menu_button">
