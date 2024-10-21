@@ -83,8 +83,6 @@ function getInfoContentMain(height, weight, baseExperience, abilities) {
     `;
 }
 
-
-
 function getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed) {
     return`
         <table class="info_table">
@@ -131,22 +129,31 @@ function getInfoContentEvoChain(img_URL, pokemonId, evo1, evo2, evo3) {
 
 function getInfoContentNoEvo(imgPath) {
     return `
-    <img src="${imgPath}" alt="">
+    <div class="evoChainImgDiv">
+        <img src="${imgPath}" alt="">
+    </div>
     `;
 }
 
 function getInfoContentOneEvo(imgPathBaseEvo, imgPathFirstEvo) {
     return `
+    <div class="evoChainImgDiv">
         <img src="${imgPathBaseEvo}" alt="">
+        <div>>></div>
         <img src="${imgPathFirstEvo}" alt="">
+    </div>
     `;
 }
 
 function getInfoContentDuoEvo(imgPathBaseEvo, imgPathFirstEvo, imgPathSecondEvo) {
-    return `
+    return `  
+    <div class="evoChainImgDiv">
         <img src="${imgPathBaseEvo}" alt="">
+        <div>>></div>
         <img src="${imgPathFirstEvo}" alt="">
+        <div>>></div>
         <img src="${imgPathSecondEvo}" alt="">
+    </div>
     `;
 }
 

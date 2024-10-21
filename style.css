@@ -3,6 +3,10 @@ body {
     width: 100%;
     color: white;
     background-color: rgb(15, 66, 86);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
 
 header {
@@ -83,6 +87,16 @@ header {
 .actual_pokemon_type img {
     margin: 0 4px;
     height: 70%;
+}
+
+.load_more_button {
+    height: 100px;
+    width: 200px;
+    background-color: red;
+}
+
+.load_more_button:hover {
+    cursor: pointer;
 }
 
 

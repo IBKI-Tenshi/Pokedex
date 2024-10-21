@@ -14,7 +14,7 @@ async function loadData(path) {
 // Pokémon- und Typ-Daten laden
 async function loadActualShownPokemon() {
     let allPokemon = await loadData("pokemon?limit=100000&offset=0");
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < 40; i++) {
         actualShownPokemon.push(allPokemon[i]);
         await loadPokemonTypes(allPokemon[i].url);  // Typen für jedes Pokémon laden
     }
@@ -134,13 +134,21 @@ async function renderInfoEvoChain(infoDataToJson) {
     let EvoChainData = await fetch(EvoChainURL.evolution_chain.url).then(res => res.json());
     // prüfung wie viele entwicklungsstufen das pokemon hat
 
-    if (EvoChainData.chain.evolves_to.length == 0) { // keine Entwicklung
+    console.log(EvoChainData.chain.evolves_to.length);
+    
+
+    if (EvoChainData.chain.evolves_to.length === 0) { // keine Entwicklung
         let path = EvoChainURL.id;
         renderInfoContentNoEvo(path);
     } else {
         if (EvoChainData.chain.evolves_to[0].evolves_to.length == 0) { // eine entwicklungen
             let baseEvoId = EvoChainData.chain.species.url.split("/")[6];
             let firstEvoId = EvoChainData.chain.evolves_to[0].species.url.split("/")[6];
+
+            console.log(EvoChainData.chain);
+            console.log(EvoChainData.chain.evolves_to[0]);
+            
+
             renderInfoContentOneEvo(baseEvoId, firstEvoId);
             
         } else {    // zwei entwicklungen
@@ -183,7 +191,6 @@ async function renderInfoContentDuoEvo(baseEvoId, firstEvoId, secondEvoId) {
     infoContent.innerHTML = '';
     infoContent.innerHTML = getInfoContentDuoEvo(imgPathBaseEvo, imgPathFirstEvo, imgPathSecondEvo);
 }
-
 
 function previousPokemon(pokemonId) {
     let currentPokemonIndex = pokemonId - 1;
