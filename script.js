@@ -14,7 +14,7 @@ async function loadData(path) {
 // Pokémon- und Typ-Daten laden
 async function loadActualShownPokemon() {
     let allPokemon = await loadData("pokemon?limit=100000&offset=0");
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 500; i++) {
         actualShownPokemon.push(allPokemon[i]);
         await loadPokemonTypes(allPokemon[i].url);  // Typen für jedes Pokémon laden
     }
@@ -32,7 +32,7 @@ async function loadIdInArray() {
 
 // Pokémon-Typen aus der API abrufen
 async function loadPokemonTypes(url) {
-    let pokemonData = await fetch(url).then(res => res.json());    
+    let pokemonData = await fetch(url).then(res => res.json());
     let types = pokemonData.types.map(typeInfo => typeInfo.type.name);
     actualShownPokemonTypes.push(types);  // Typen als Array speichern
 }
@@ -66,21 +66,29 @@ async function renderBigContainer(pokemonId, pokemonName, types) {
     renderInfoContent(pokemonId - 1, 1)
 
 
-    
+
     let pokemonContainerBig = getBigContainer(pokemonId, pokemonName, types);
     overlayContent.innerHTML = pokemonContainerBig;
 }
 
 async function renderInfoContent(path, infoID) {
-
-    console.log(path);
-    
-
     let infoDataToJson = await loadInfoContent(path);
 
-    console.log(infoDataToJson);
-
     getInfoContent(infoDataToJson, infoID);
+}
+
+async function getInfoContent(infoDataToJson, infoId) {
+    let selector = infoId;
+
+    if (selector == 1) {
+        renderInfoMain(infoDataToJson);
+    } else {
+        if (selector == 2) {
+            renderInfoStats(infoDataToJson);
+        } else {
+            renderInfoEvoChain(infoDataToJson);
+        }
+    }
 }
 
 async function loadInfoContent(path) {
@@ -120,67 +128,62 @@ async function renderInfoStats(infoDataToJson) {
     infoContent.innerHTML = getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed);
 }
 
-async function renderInfoEvoChain(infoDataToJson) { 
+async function renderInfoEvoChain(infoDataToJson) {
     let actualSpeciesURL = infoDataToJson.species.url;
-
-    console.log(actualSpeciesURL);
-    
     let EvoChainURL = await fetch(actualSpeciesURL).then(res => res.json());
-
-    console.log(EvoChainURL);
-
-    console.log(EvoChainURL.evolution_chain.url);
-    
-
     let EvoChainData = await fetch(EvoChainURL.evolution_chain.url).then(res => res.json());
-    
-    console.log(EvoChainData);
-    console.log(EvoChainData.chain.species.name);
-    console.log(EvoChainData.chain.evolves_to);
-    console.log(EvoChainData.chain.evolves_to[0]);
-    console.log(EvoChainData.chain.evolves_to[0].species.name);
+    // prüfung wie viele entwicklungsstufen das pokemon hat
 
-    if (EvoChainData.chain.evolves_to[0].evolves_to.length >= 1) {
-        console.log(EvoChainData.chain.evolves_to[0].evolves_to[0]);
-        console.log(EvoChainData.chain.evolves_to[0].evolves_to[0].species.name);
-    }
-
-    let pokemonId = EvoChainData.chain.species.url.split("/")[6];
-    // let pokemonId = pokemon.url.split("/")[6];
-
-    console.log(EvoChainData.chain);
-    
-    console.log(pokemonId);
-    
-    let evo1 = EvoChainData.chain.species.name;
-    let evo2 = EvoChainData.chain.evolves_to[0].species.name;
-    let evo3 = EvoChainData.chain.evolves_to[0].evolves_to[0].species.name;
-
-    let infoContent = document.getElementById('info_content');
-    console.log(infoContent);
-
-    infoContent.innerHTML = '';
-    infoContent.innerHTML = getInfoContentEvoChain(img_URL, evo1, evo2, evo3)
-
-
-}
-
-async function getInfoContent(infoDataToJson, infoId) {
-
-
-    let selector = infoId;
-
-    if (selector == 1) {
-        renderInfoMain(infoDataToJson);
+    if (EvoChainData.chain.evolves_to.length == 0) { // keine Entwicklung
+        let path = EvoChainURL.id;
+        renderInfoContentNoEvo(path);
     } else {
-        if (selector == 2) {
-            renderInfoStats(infoDataToJson);
-        } else {
-            renderInfoEvoChain(infoDataToJson);
+        if (EvoChainData.chain.evolves_to[0].evolves_to.length == 0) { // eine entwicklungen
+            let baseEvoId = EvoChainData.chain.species.url.split("/")[6];
+            let firstEvoId = EvoChainData.chain.evolves_to[0].species.url.split("/")[6];
+            renderInfoContentOneEvo(baseEvoId, firstEvoId);
+            
+        } else {    // zwei entwicklungen
+            let baseEvoId = EvoChainData.chain.species.url.split("/")[6];
+            let firstEvoId = EvoChainData.chain.evolves_to[0].species.url.split("/")[6];
+            let secondEvoId = EvoChainData.chain.evolves_to[0].evolves_to[0].species.url.split("/")[6];
+            renderInfoContentDuoEvo(baseEvoId, firstEvoId, secondEvoId);
         }
     }
-
 }
+
+async function renderInfoContentNoEvo(path) {
+    let infoContent = document.getElementById('info_content');
+    let imgPath = img_URL + path + ".png";
+
+    infoContent.innerHTML = '';
+    infoContent.innerHTML = getInfoContentNoEvo(imgPath);
+}
+
+async function renderInfoContentOneEvo(baseEvoId, firstEvoId) {
+
+    let imgPathBaseEvo = img_URL + baseEvoId + ".png";
+    let pathFirst = firstEvoId;
+    let imgPathFirstEvo = img_URL + pathFirst + ".png";
+    let infoContent = document.getElementById('info_content');
+
+    infoContent.innerHTML = '';
+    infoContent.innerHTML = getInfoContentOneEvo(imgPathBaseEvo, imgPathFirstEvo);
+}
+
+async function renderInfoContentDuoEvo(baseEvoId, firstEvoId, secondEvoId) {
+
+    let imgPathBaseEvo = img_URL + baseEvoId + ".png";
+    let pathFirst = firstEvoId;
+    let imgPathFirstEvo = img_URL + pathFirst + ".png";
+    let pathSecond = secondEvoId;
+    let imgPathSecondEvo = img_URL + pathSecond + ".png";
+    let infoContent = document.getElementById('info_content');
+
+    infoContent.innerHTML = '';
+    infoContent.innerHTML = getInfoContentDuoEvo(imgPathBaseEvo, imgPathFirstEvo, imgPathSecondEvo);
+}
+
 
 function previousPokemon(pokemonId) {
     let currentPokemonIndex = pokemonId - 1;

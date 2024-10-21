@@ -16,7 +16,6 @@ function getLittleContainer(pokemon, img_URL, types) {
 }
 
 function getBigContainer(pokemonId, pokemonName, types) {
-
     let mainInfo = 1;
     let statsInfo = 2;
     let EvoChain = 3;
@@ -117,14 +116,37 @@ function getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed) {
     `;
 }
 
-function getInfoContentEvoChain(img_URL, evo1, evo2, evo3) {
+function getInfoContentEvoChain(img_URL, pokemonId, evo1, evo2, evo3) {
+
+    let lastPokemonId = parseInt(pokemonId) - 1;
+    let nextPokemonId = parseInt(pokemonId) + 1;
+
+
     return `
     evo1 = ${evo1}
     evo3 = ${evo2}
     evo3 = ${evo3}
+    `;
+}
 
-    
-<img src="${img_URL}${pokemon.Id}.png" alt="abc">
+function getInfoContentNoEvo(imgPath) {
+    return `
+    <img src="${imgPath}" alt="">
+    `;
+}
+
+function getInfoContentOneEvo(imgPathBaseEvo, imgPathFirstEvo) {
+    return `
+        <img src="${imgPathBaseEvo}" alt="">
+        <img src="${imgPathFirstEvo}" alt="">
+    `;
+}
+
+function getInfoContentDuoEvo(imgPathBaseEvo, imgPathFirstEvo, imgPathSecondEvo) {
+    return `
+        <img src="${imgPathBaseEvo}" alt="">
+        <img src="${imgPathFirstEvo}" alt="">
+        <img src="${imgPathSecondEvo}" alt="">
     `;
 }
 
