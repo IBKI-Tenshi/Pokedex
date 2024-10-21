@@ -49,7 +49,7 @@ function toggle_overlay() {
     }
 }
 
-async function renderBigContainer(backgroundColor, pokemonId, pokemonName, types) {
+async function renderBigContainer(pokemonId, pokemonName, types) {
     let overlayContent = document.getElementById('overlay');
     overlayContent.innerHTML = '';
 
@@ -58,7 +58,7 @@ async function renderBigContainer(backgroundColor, pokemonId, pokemonName, types
     console.log(pokemonId - 1);
     
 
-    let pokemonContainerBig = getBigContainer(backgroundColor, pokemonId, pokemonName, types);
+    let pokemonContainerBig = getBigContainer(pokemonId, pokemonName, types);
     overlayContent.innerHTML = pokemonContainerBig;
 
 }

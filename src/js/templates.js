@@ -1,20 +1,16 @@
 function getLittleContainer(pokemon, img_URL, types) {
     let pokemonId = pokemon.url.split("/")[6];  // Pokémon-ID extrahieren
 
-    let primaryType = types[0]; // Nimm den ersten Typ aus der Liste
-    let backgroundColor = typeBackground[primaryType] || "#FFF";
-
-
     // console.log(pokemon);
     
 
     return `
-        <div class="pokemon_container_little" style="background-color: ${backgroundColor};" onclick="toggle_overlay(); renderBigContainer('${backgroundColor}', ${pokemonId}, '${pokemon.name}', ['${types.join("','")}']);">
+        <div class="pokemon_container_little" onclick="toggle_overlay(); renderBigContainer(${pokemonId}, '${pokemon.name}', ['${types.join("','")}']);">
             <div class="id_and_name">
                 <p class="pokemon_id">#${pokemonId}</p>
                 <h3 class="pokemon_name">${pokemon.name}</h3>
             </div>
-            <div class="img_little">
+            <div class="img_little bg_${types[0]}">
                 <img src="${img_URL}${pokemonId}.png" alt="${pokemon.name}">
             </div>
             <div class="actual_pokemon_type">
@@ -24,18 +20,18 @@ function getLittleContainer(pokemon, img_URL, types) {
     `;
 }
 
-function getBigContainer(backgroundColor, pokemonId, pokemonName, types) {
+function getBigContainer(pokemonId, pokemonName, types) {
 
     let mainInfo = 1;
     let statsInfo = 2;
     // let EvoChain = 3;
     return `
-    <div class="pokemon_container_big" style="background-color: ${backgroundColor};" onclick="event.stopPropagation()">
+    <div class="pokemon_container_big" onclick="event.stopPropagation()">
         <div class="id_and_name_big">
             <p class="pokemon_id_big">#${pokemonId}</p>
             <h2 class="pokemon_name_big">${pokemonName}</h2>
         </div>
-        <div class="img_big">
+        <div class="img_big bg_${types[0]}">
             <img src="${img_URL}${pokemonId}.png" alt="${pokemonName}">
         </div>
         <div class="actual_pokemon_type_big">
