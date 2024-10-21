@@ -66,6 +66,10 @@ header {
     width: 100%;
 }
 
+.img_little :hover {
+    cursor: pointer;
+}
+
 .actual_pokemon_type {
     height: 25%;
     width: 100%;
@@ -80,3 +84,5 @@ header {
     margin: 0 4px;
     height: 70%;
 }
+
+

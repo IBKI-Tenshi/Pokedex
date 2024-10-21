@@ -14,15 +14,25 @@ async function loadData(path) {
 // Pokémon- und Typ-Daten laden
 async function loadActualShownPokemon() {
     let allPokemon = await loadData("pokemon?limit=100000&offset=0");
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 30; i++) {
         actualShownPokemon.push(allPokemon[i]);
         await loadPokemonTypes(allPokemon[i].url);  // Typen für jedes Pokémon laden
     }
+    loadIdInArray();
+}
+
+async function loadIdInArray() {
+    for (let i = 0; i < actualShownPokemon.length; i++) {
+        let pokemonId = actualShownPokemon[i].url.split("/")[6]; // Extrahiere die Pokémon-ID
+        actualShownPokemon[i].Id = pokemonId; // Füge die ID als neues Feld hinzu
+    }
+
+    console.log(actualShownPokemon); // Überprüfe die aktualisierten Daten
 }
 
 // Pokémon-Typen aus der API abrufen
 async function loadPokemonTypes(url) {
-    let pokemonData = await fetch(url).then(res => res.json());
+    let pokemonData = await fetch(url).then(res => res.json());    
     let types = pokemonData.types.map(typeInfo => typeInfo.type.name);
     actualShownPokemonTypes.push(types);  // Typen als Array speichern
 }
@@ -55,20 +65,20 @@ async function renderBigContainer(pokemonId, pokemonName, types) {
 
     renderInfoContent(pokemonId - 1, 1)
 
-    console.log(pokemonId - 1);
-    
 
+    
     let pokemonContainerBig = getBigContainer(pokemonId, pokemonName, types);
     overlayContent.innerHTML = pokemonContainerBig;
-
 }
 
 async function renderInfoContent(path, infoID) {
 
-    let infoDataToJson = await loadInfoContent(path);
-
     console.log(path);
     
+
+    let infoDataToJson = await loadInfoContent(path);
+
+    console.log(infoDataToJson);
 
     getInfoContent(infoDataToJson, infoID);
 }
@@ -76,8 +86,6 @@ async function renderInfoContent(path, infoID) {
 async function loadInfoContent(path) {
     let infoData = await fetch(actualShownPokemon[path].url);
     let infoDataToJson = await infoData.json();
-
-    console.log(infoDataToJson, 1);
 
     return infoDataToJson;
 }
@@ -90,7 +98,7 @@ async function renderInfoMain(infoDataToJson) {
     let abilities = infoDataToJson.abilities.map(abilityInfo => abilityInfo.ability.name).join(', ');
 
     let infoContent = document.getElementById('info_content');
-    console.log(infoContent);
+
 
     infoContent.innerHTML = '';
     infoContent.innerHTML = getInfoContentMain(height, weight, baseExperience, abilities);
@@ -112,8 +120,50 @@ async function renderInfoStats(infoDataToJson) {
     infoContent.innerHTML = getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed);
 }
 
-async function renderInfoEvoChain(infoDataToJson) { }
+async function renderInfoEvoChain(infoDataToJson) { 
+    let actualSpeciesURL = infoDataToJson.species.url;
 
+    console.log(actualSpeciesURL);
+    
+    let EvoChainURL = await fetch(actualSpeciesURL).then(res => res.json());
+
+    console.log(EvoChainURL);
+
+    console.log(EvoChainURL.evolution_chain.url);
+    
+
+    let EvoChainData = await fetch(EvoChainURL.evolution_chain.url).then(res => res.json());
+    
+    console.log(EvoChainData);
+    console.log(EvoChainData.chain.species.name);
+    console.log(EvoChainData.chain.evolves_to);
+    console.log(EvoChainData.chain.evolves_to[0]);
+    console.log(EvoChainData.chain.evolves_to[0].species.name);
+
+    if (EvoChainData.chain.evolves_to[0].evolves_to.length >= 1) {
+        console.log(EvoChainData.chain.evolves_to[0].evolves_to[0]);
+        console.log(EvoChainData.chain.evolves_to[0].evolves_to[0].species.name);
+    }
+
+    let pokemonId = EvoChainData.chain.species.url.split("/")[6];
+    // let pokemonId = pokemon.url.split("/")[6];
+
+    console.log(EvoChainData.chain);
+    
+    console.log(pokemonId);
+    
+    let evo1 = EvoChainData.chain.species.name;
+    let evo2 = EvoChainData.chain.evolves_to[0].species.name;
+    let evo3 = EvoChainData.chain.evolves_to[0].evolves_to[0].species.name;
+
+    let infoContent = document.getElementById('info_content');
+    console.log(infoContent);
+
+    infoContent.innerHTML = '';
+    infoContent.innerHTML = getInfoContentEvoChain(img_URL, evo1, evo2, evo3)
+
+
+}
 
 async function getInfoContent(infoDataToJson, infoId) {
 
@@ -155,12 +205,11 @@ function nextPokemon(pokemonId) {
 function showPokemonInOverlay(index) {
     let selectedPokemon = actualShownPokemon[index];
     let selectedPokemonTypes = actualShownPokemonTypes[index];
-    let backgroundColor = typeBackground[selectedPokemonTypes[0]] || "#FFF";
     let pokemonId = selectedPokemon.url.split("/")[6];
     let pokemonName = selectedPokemon.name;
     let types = selectedPokemonTypes;
 
-    renderBigContainer(backgroundColor, pokemonId, pokemonName, types);
+    renderBigContainer(pokemonId, pokemonName, types);
 }
 
 

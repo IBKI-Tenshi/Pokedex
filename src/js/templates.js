@@ -1,17 +1,12 @@
 function getLittleContainer(pokemon, img_URL, types) {
-    let pokemonId = pokemon.url.split("/")[6];  // Pokémon-ID extrahieren
-
-    // console.log(pokemon);
-    
-
     return `
-        <div class="pokemon_container_little" onclick="toggle_overlay(); renderBigContainer(${pokemonId}, '${pokemon.name}', ['${types.join("','")}']);">
+        <div class="pokemon_container_little" onclick="toggle_overlay(); renderBigContainer(${pokemon.Id}, '${pokemon.name}', ['${types.join("','")}']);">
             <div class="id_and_name">
-                <p class="pokemon_id">#${pokemonId}</p>
+                <p class="pokemon_id">#${pokemon.Id}</p>
                 <h3 class="pokemon_name">${pokemon.name}</h3>
             </div>
             <div class="img_little bg_${types[0]}">
-                <img src="${img_URL}${pokemonId}.png" alt="${pokemon.name}">
+                <img src="${img_URL}${pokemon.Id}.png" alt="${pokemon.name}">
             </div>
             <div class="actual_pokemon_type">
                 ${getTypeImages(types)}
@@ -24,7 +19,8 @@ function getBigContainer(pokemonId, pokemonName, types) {
 
     let mainInfo = 1;
     let statsInfo = 2;
-    // let EvoChain = 3;
+    let EvoChain = 3;
+
     return `
     <div class="pokemon_container_big" onclick="event.stopPropagation()">
         <div class="id_and_name_big">
@@ -44,7 +40,7 @@ function getBigContainer(pokemonId, pokemonName, types) {
             <a class="info_menu_button border_l_r" onclick="renderInfoContent(${pokemonId - 1}, '${statsInfo}')">
                 <h4>stats</h4>
             </a>
-            <a class="info_menu_button">
+            <a class="info_menu_button"  onclick="renderInfoContent(${pokemonId - 1}, '${EvoChain}')">
                 <h4>evo chain</h4>
             </a>
         </div>
@@ -121,7 +117,14 @@ function getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed) {
     `;
 }
 
-function getInfoContentEvoChain(path) {
+function getInfoContentEvoChain(img_URL, evo1, evo2, evo3) {
+    return `
+    evo1 = ${evo1}
+    evo3 = ${evo2}
+    evo3 = ${evo3}
 
+    
+<img src="${img_URL}${pokemon.Id}.png" alt="abc">
+    `;
 }
 
