@@ -84,7 +84,7 @@ function getInfoContentMain(height, weight, baseExperience, abilities) {
 }
 
 function getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed) {
-    return`
+    return `
         <table class="info_table">
         <tr>
             <td>HP</td>
@@ -114,19 +114,6 @@ function getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed) {
     `;
 }
 
-function getInfoContentEvoChain(img_URL, pokemonId, evo1, evo2, evo3) {
-
-    let lastPokemonId = parseInt(pokemonId) - 1;
-    let nextPokemonId = parseInt(pokemonId) + 1;
-
-
-    return `
-    evo1 = ${evo1}
-    evo3 = ${evo2}
-    evo3 = ${evo3}
-    `;
-}
-
 function getInfoContentNoEvo(imgPath) {
     return `
     <div class="evoChainImgDiv">
@@ -138,11 +125,12 @@ function getInfoContentNoEvo(imgPath) {
 function getFirstStageContainer(imgPathBaseEvo) {
     return `
         <div id="all_evo_div">
-        <div id="base_evo_div">
-            <img src="${imgPathBaseEvo}" alt="">
+            <div id="base_evo_div">
+                <img src="${imgPathBaseEvo}" alt="">
+            </div>
+            <div id="first_evo_options">
+            </div>
         </div>
-        <div id="first_evo_options"></div>
-    </div>
     `;
 }
 
@@ -156,23 +144,23 @@ function getFirstStageContainerPokemon(img_URL, path) {
 
 function getInfoContentOneEvo(imgPathBaseEvo, imgPathFirstEvo) {
     return `
-    <div class="evoChainImgDiv">
-        <img src="${imgPathBaseEvo}" alt="">
-        <div>>></div>
-        <img src="${imgPathFirstEvo}" alt="">
-    </div>
+        <div class="evoChainImgDiv">
+            <img src="${imgPathBaseEvo}" alt="">
+            <div>>></div>
+            <img src="${imgPathFirstEvo}" alt="">
+        </div>
     `;
 }
 
 function getInfoContentDuoEvo(imgPathBaseEvo, imgPathFirstEvo, imgPathSecondEvo) {
     return `  
-    <div class="evoChainImgDiv">
-        <img src="${imgPathBaseEvo}" alt="">
-        <div>>></div>
-        <img src="${imgPathFirstEvo}" alt="">
-        <div>>></div>
-        <img src="${imgPathSecondEvo}" alt="">
-    </div>
+        <div class="evoChainImgDiv">
+            <img src="${imgPathBaseEvo}" alt="">
+            <div>>></div>
+            <img src="${imgPathFirstEvo}" alt="">
+            <div>>></div>
+            <img src="${imgPathSecondEvo}" alt="">
+        </div>
     `;
 }
 
