@@ -119,6 +119,17 @@
     justify-content: center;
 }
 
+#all_evo_div {
+    display: flex;
+    flex-direction: row;
+}
+
+#first_evo_options {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
 .back_next_buttons_div {
     width: 100%;
     height: 8%;

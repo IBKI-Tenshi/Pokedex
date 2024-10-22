@@ -4,5 +4,7 @@ let typeImg_URL = "./assets/icons/Pokemon_Type_Icon_";  // Lokaler Pfad zu deine
 let actualShownPokemon = [];
 let actualShownPokemonTypes = [];
 
+let actualpokemonFirstEvoOptions = [];
+
 
 let isLoading = false;  // Variable, um den Ladezustand zu verfolgen

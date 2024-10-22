@@ -135,6 +135,25 @@ function getInfoContentNoEvo(imgPath) {
     `;
 }
 
+function getFirstStageContainer(imgPathBaseEvo) {
+    return `
+        <div id="all_evo_div">
+        <div id="base_evo_div">
+            <img src="${imgPathBaseEvo}" alt="">
+        </div>
+        <div id="first_evo_options"></div>
+    </div>
+    `;
+}
+
+function getFirstStageContainerPokemon(img_URL, path) {
+    return `
+        <div>
+            <img src="${img_URL + path + ".png"}" alt="">
+        </div>
+    `;
+}
+
 function getInfoContentOneEvo(imgPathBaseEvo, imgPathFirstEvo) {
     return `
     <div class="evoChainImgDiv">
