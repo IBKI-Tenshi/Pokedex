@@ -1,8 +1,10 @@
 async function init() {
     await loadData("pokemon?limit=100000&offset=0");
     await loadActualShownPokemon();
-    await renderLittleContainer();
+    await renderLittleContainer(actualShownPokemon);
 }
+
+document.addEventListener("DOMContentLoaded", initializeSearch); // Ruft die Initialisierungsfunktion auf, sobald die Seite geladen ist
 
 async function loadData(path) { // Lade Pokémon-Daten
     let data = await fetch(BASE_URL + path + ".json");
@@ -26,25 +28,24 @@ async function loadIdInArray() {
     }
 }
 
-async function loadPokemonTypes(url) { // Pokémon-Typen aus der API abrufen
-    let pokemonData = await fetch(url).then(res => res.json());
-    let types = pokemonData.types.map(typeInfo => typeInfo.type.name);
-    actualShownPokemonTypes.push(types);  // Typen als Array speichern
+async function loadPokemonTypes() { // Pokémon-Typen aus der API abrufen
+    for (let i = 0; i < actualShownPokemon.length; i++) {
+        let pokemonData = await fetch(actualShownPokemon[i].url).then(res => res.json());
+        let types = pokemonData.types.map(typeInfo => typeInfo.type.name);
+        actualShownPokemon[i].types = types;  // Typen als neues Feld hinzufügen
+    }
 }
 
-async function renderLittleContainer() { // Container für alle Pokémon rendern
+async function renderLittleContainer(array) { // Container für alle Pokémon rendern
     let allContent = document.getElementById('all_content');
     allContent.innerHTML = '';
 
     // Iteriere über die Pokémon und füge den HTML-Container hinzu
-    actualShownPokemon.forEach((pokemon, index) => {
-        let pokemonContainer = getLittleContainer(pokemon, img_URL, actualShownPokemonTypes[index]);
+    array.forEach(pokemon => {
+        // Hier wird die Typeninformation direkt aus dem Pokémon-Objekt genommen
+        let pokemonContainer = getLittleContainer(pokemon, img_URL, pokemon.types);
         allContent.innerHTML += pokemonContainer;
     });
-
-    console.log(actualShownPokemon);
-    console.log(actualShownPokemonTypes);
-    
 }
 
 function toggle_overlay() {
@@ -143,10 +144,9 @@ function nextPokemon(pokemonId) {
 
 function showPokemonInOverlay(index) {
     let selectedPokemon = actualShownPokemon[index];
-    let selectedPokemonTypes = actualShownPokemonTypes[index];
     let pokemonId = selectedPokemon.url.split("/")[6];
     let pokemonName = selectedPokemon.name;
-    let types = selectedPokemonTypes;
+    let types = selectedPokemon.types; // Typen direkt aus dem Pokémon-Objekt laden
 
     renderBigContainer(pokemonId, pokemonName, types);
 }
@@ -155,9 +155,9 @@ async function loadMore() {
     if (isLoading) return;  // Wenn bereits geladen wird, nichts tun
     isLoading = true;  // Ladevorgang starten
 
-    expandShownPokemon()
-    loadIdInArray();
-    renderLittleContainer();
+    await expandShownPokemon()
+    await loadIdInArray();
+    renderLittleContainer(actualShownPokemon);
 
     isLoading = false;  // Ladevorgang abgeschlossen
 }
@@ -173,37 +173,25 @@ async function expandShownPokemon() {
     }
 }
 
-
-
-
 async function initializeSearch() {
     let searchBar = document.getElementById("searchBar");
+    let loadMoreButton = document.querySelector(".load_more_button"); // Den Button auswählen
 
     searchBar.addEventListener("input", function () {
         let query = searchBar.value.toLowerCase();
+        if (query.length >= 3) { // Überprüft, ob mindestens 3 Zeichen eingegeben wurden
+            searchedPokemon = actualShownPokemon.filter(pokemon => // Filtert die Pokémon, deren Name mit der eingegebenen Zeichenfolge beginnt
+                pokemon.name.toLowerCase().startsWith(query)); // Überprüft, ob der Name mit der Zeichenfolge beginnt 
+                
+            renderLittleContainer(searchedPokemon);
+            loadMoreButton.style.display = 'none'; // Button ausblenden, wenn 3 oder mehr Zeichen eingegeben werden
 
-        // Überprüft, ob mindestens 3 Zeichen eingegeben wurden
-        if (query.length >= 3) {
-            // Filtert die Pokémon, deren Name mit der eingegebenen Zeichenfolge beginnt
-            searchedPokemon = actualShownPokemon.filter(pokemon =>
-                pokemon.name.toLowerCase().startsWith(query) // Überprüft, ob der Name mit der Zeichenfolge beginnt
-            );
-
-            // Lädt die Typen der gefilterten Pokémon basierend auf ihren Positionen in searchedPokemon
-            searchedPokemonTypes = searchedPokemon.map((pokemon, index) => {
-                // Hier wird angenommen, dass die Positionen der Pokémon und Typen übereinstimmen
-                return actualShownPokemonTypes[index];
-            });
-
-            console.log(searchedPokemon); // Ausgabe der gefilterten Pokémon zur Überprüfung
-            console.log(searchedPokemonTypes); // Ausgabe der gefilterten Pokémon-Typen zur Überprüfung
-            // Hier kannst du die nächste Funktion aufrufen, um die gefilterten Pokémon und ihre Typen anzuzeigen
         } else {
             searchedPokemon = []; // Leert das Array, wenn weniger als 3 Zeichen eingegeben werden
-            searchedPokemonTypes = []; // Leert auch das Typen-Array
+            renderLittleContainer(actualShownPokemon); // aktuell geladene Pokémon anzeigen
+            loadMoreButton.style.display = ''; // Button wieder anzeigen, wenn weniger als 3 Zeichen eingegeben werden
         }
     });
 }
 
-// Ruft die Initialisierungsfunktion auf, sobald die Seite geladen ist
-document.addEventListener("DOMContentLoaded", initializeSearch);
+

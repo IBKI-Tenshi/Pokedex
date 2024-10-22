@@ -55,8 +55,7 @@ function getBigContainer(pokemonId, pokemonName, types) {
     `;
 }
 
-// Funktion, die die Typ-Bilder basierend auf den Typen anzeigt
-function getTypeImages(types) {
+function getTypeImages(types) { // Funktion, die die Typ-Bilder basierend auf den Typen anzeigt
     return types.map(type => `<img src="${typeImg_URL}${type}.png" alt="${type}">`).join(" ");
 }
 

@@ -24,6 +24,18 @@ header {
     align-items: center;
 }
 
+#title_div img {
+    height: 50px;
+    width: 50px;
+    margin: 8px;
+}
+
+#search_bar {
+    margin: 8px;
+    height: 24px;
+    border-radius: 5px;
+}
+
 #all_content {
     width: 100%;
     display: flex;
@@ -34,12 +46,13 @@ header {
 }
 
 .pokemon_container_little {
-    width: 160px;
-    height: 200px;
+    width: 300px;
+    height: 280px;
     background-color: rgba(144, 144, 205, 0.316);
     margin: 8px;
     border-radius: 10px;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .id_and_name {
@@ -68,10 +81,6 @@ header {
 .img_little img {
     height: 100%;
     width: 100%;
-}
-
-.img_little :hover {
-    cursor: pointer;
 }
 
 .actual_pokemon_type {
