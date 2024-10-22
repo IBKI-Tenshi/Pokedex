@@ -4,32 +4,23 @@ async function renderInfoEvoChain(infoDataToJson) {
     let EvoChainData = await fetch(EvoChainURL.evolution_chain.url).then(res => res.json());
 
     if (EvoChainData.chain.evolves_to.length === 0) { // Keine Entwicklung
-        let path = EvoChainURL.id;
-        renderInfoContentNoEvo(path);
-    } else if (EvoChainData.chain.evolves_to.length > 1) { // Mehrere Entwicklungsoptionen auf der ersten Stufe
-        let baseEvoId = EvoChainData.chain.species.url.split("/")[6];
-        actualpokemonFirstEvoOptions = []; // leert das array damit die pokemon sicher nur einmal angezeigt werden
+        renderInfoContentNoEvo(EvoChainURL);
 
-        for (let index = 0; index < EvoChainData.chain.evolves_to.length; index++) {
-            let speciesUrl = EvoChainData.chain.evolves_to[index].species.url; // Extrahiere die URL der aktuellen Entwicklungsstufe
-            let speciesId = speciesUrl.split("/")[6]; // Extrahiere die ID aus der URL 
-            actualpokemonFirstEvoOptions.push(speciesId); // Speichere die ID im globalen Array
-        }
-        renderInfoContentMultipleEvosFirstStage(baseEvoId);
+    } else if (EvoChainData.chain.evolves_to.length > 1) { // Mehrere Entwicklungsoptionen auf der ersten Stufe
+        renderDataMultipleEvosFirstStage(EvoChainData);
+        renderInfoContentMultipleEvosFirstStage(EvoChainData);
         renderfirstStagePokemon();
+
     } else if (EvoChainData.chain.evolves_to[0].evolves_to.length === 0) { // Eine Entwicklung
-        let baseEvoId = EvoChainData.chain.species.url.split("/")[6];
-        let firstEvoId = EvoChainData.chain.evolves_to[0].species.url.split("/")[6];
-        renderInfoContentOneEvo(baseEvoId, firstEvoId);
+        renderInfoContentOneEvo(EvoChainData);
+        
     } else if (EvoChainData.chain.evolves_to[0].evolves_to[0].evolves_to.length === 0) { // Zwei Entwicklungen
-        let baseEvoId = EvoChainData.chain.species.url.split("/")[6];
-        let firstEvoId = EvoChainData.chain.evolves_to[0].species.url.split("/")[6];
-        let secondEvoId = EvoChainData.chain.evolves_to[0].evolves_to[0].species.url.split("/")[6];
-        renderInfoContentDuoEvo(baseEvoId, firstEvoId, secondEvoId);
+        renderInfoContentDuoEvo(EvoChainData);
     }
 }
 
-async function renderInfoContentNoEvo(path) {
+async function renderInfoContentNoEvo(EvoChainURL) {
+    let path = EvoChainURL.id;
     let infoContent = document.getElementById('info_content');
     let imgPath = img_URL + path + ".png";
 
@@ -37,7 +28,18 @@ async function renderInfoContentNoEvo(path) {
     infoContent.innerHTML = getInfoContentNoEvo(imgPath);
 }
 
-async function renderInfoContentMultipleEvosFirstStage(baseEvoId) {
+async function renderDataMultipleEvosFirstStage(EvoChainData) {
+    actualpokemonFirstEvoOptions = []; // leert das array damit die pokemon sicher nur einmal angezeigt werden
+    
+    for (let index = 0; index < EvoChainData.chain.evolves_to.length; index++) {
+        let speciesUrl = EvoChainData.chain.evolves_to[index].species.url; // Extrahiere die URL der aktuellen Entwicklungsstufe
+        let speciesId = speciesUrl.split("/")[6]; // Extrahiere die ID aus der URL 
+        actualpokemonFirstEvoOptions.push(speciesId); // Speichere die ID im globalen Array
+    }
+}
+
+async function renderInfoContentMultipleEvosFirstStage(EvoChainData) {
+    let baseEvoId = EvoChainData.chain.species.url.split("/")[6];
     let imgPathBaseEvo = img_URL + baseEvoId + ".png";
     let infoContent = document.getElementById('info_content');
 
@@ -55,26 +57,27 @@ async function renderfirstStagePokemon() {
     });
 }
 
-async function renderInfoContentOneEvo(baseEvoId, firstEvoId) {
-
+async function renderInfoContentOneEvo(EvoChainData) {
+    let baseEvoId = EvoChainData.chain.species.url.split("/")[6];
+    let firstEvoId = EvoChainData.chain.evolves_to[0].species.url.split("/")[6];
     let imgPathBaseEvo = img_URL + baseEvoId + ".png";
-    let pathFirst = firstEvoId;
-    let imgPathFirstEvo = img_URL + pathFirst + ".png";
-    let infoContent = document.getElementById('info_content');
+    let imgPathFirstEvo = img_URL + firstEvoId + ".png";
 
+    let infoContent = document.getElementById('info_content');
     infoContent.innerHTML = "";
     infoContent.innerHTML = getInfoContentOneEvo(imgPathBaseEvo, imgPathFirstEvo);
 }
 
-async function renderInfoContentDuoEvo(baseEvoId, firstEvoId, secondEvoId) {
+async function renderInfoContentDuoEvo(EvoChainData) {
+    let baseEvoId = EvoChainData.chain.species.url.split("/")[6];
+    let firstEvoId = EvoChainData.chain.evolves_to[0].species.url.split("/")[6];
+    let secondEvoId = EvoChainData.chain.evolves_to[0].evolves_to[0].species.url.split("/")[6];
 
     let imgPathBaseEvo = img_URL + baseEvoId + ".png";
-    let pathFirst = firstEvoId;
-    let imgPathFirstEvo = img_URL + pathFirst + ".png";
-    let pathSecond = secondEvoId;
-    let imgPathSecondEvo = img_URL + pathSecond + ".png";
-    let infoContent = document.getElementById('info_content');
+    let imgPathFirstEvo = img_URL + firstEvoId + ".png";
+    let imgPathSecondEvo = img_URL + secondEvoId + ".png";
 
+    let infoContent = document.getElementById('info_content');
     infoContent.innerHTML = '';
     infoContent.innerHTML = getInfoContentDuoEvo(imgPathBaseEvo, imgPathFirstEvo, imgPathSecondEvo);
 }

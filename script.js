@@ -12,11 +12,12 @@ async function loadData(path) { // Lade Pokémon-Daten
 
 async function loadActualShownPokemon() { // Pokémon- und Typ-Daten laden
     let allPokemon = await loadData("pokemon?limit=100000&offset=0");
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 1302; i++) {
         actualShownPokemon.push(allPokemon[i]);
         await loadPokemonTypes(allPokemon[i].url);  // Typen für jedes Pokémon laden
     }
-    
+    console.log(allPokemon);
+    console.log(actualShownPokemon);
     loadIdInArray();
 }
 
@@ -152,6 +153,14 @@ async function loadMore() {
     if (isLoading) return;  // Wenn bereits geladen wird, nichts tun
     isLoading = true;  // Ladevorgang starten
 
+    expandShownPokemon()
+    loadIdInArray();
+    renderLittleContainer();
+
+    isLoading = false;  // Ladevorgang abgeschlossen
+}
+
+async function expandShownPokemon() {
     let allPokemon = await loadData("pokemon?limit=100000&offset=0");
     let actualIndex = actualShownPokemon.length;
     let nextLength = actualIndex + 20;
@@ -160,9 +169,51 @@ async function loadMore() {
         actualShownPokemon.push(allPokemon[i]);
         await loadPokemonTypes(allPokemon[i].url);  // Typen für jedes Pokémon laden
     }
-
-    loadIdInArray();
-    renderLittleContainer();
-    isLoading = false;  // Ladevorgang abgeschlossen
 }
 
+
+
+
+  
+
+
+let allPokemon = [];
+
+async function initializeSearch() {
+  // Lädt die Pokémon-Daten und speichert sie in allPokemon
+  allPokemon = await loadData("pokemon?limit=100000&offset=0");
+
+  let searchBar = document.getElementById("searchBar");
+  let resultsDiv = document.getElementById("results");
+
+  searchBar.addEventListener("input", function () {
+    let query = searchBar.value.toLowerCase();
+
+    // Überprüft, ob mindestens 3 Zeichen eingegeben wurden
+    if (query.length >= 3) {
+      let filteredPokemon = allPokemon.filter(pokemon =>
+        pokemon.name.toLowerCase().startsWith(query) // Überprüft, ob der Name mit der Zeichenfolge beginnt
+      ).slice(0, 10); // Begrenzung auf maximal 10 Treffer
+      displayResults(filteredPokemon);
+    } else {
+      resultsDiv.innerHTML = "";
+    }
+  });
+
+  function displayResults(pokemonArray) {
+    resultsDiv.innerHTML = "";
+
+    if (pokemonArray.length === 0) {
+      resultsDiv.innerHTML = "<p>Keine Treffer</p>";
+    } else {
+      pokemonArray.forEach(pokemon => {
+        let p = document.createElement("p");
+        p.textContent = pokemon.name; // Den Namen des Pokémon anzeigen
+        resultsDiv.appendChild(p);
+      });
+    }
+  }
+}
+
+// Ruft die Initialisierungsfunktion auf, sobald die Seite geladen ist
+document.addEventListener("DOMContentLoaded", initializeSearch);
