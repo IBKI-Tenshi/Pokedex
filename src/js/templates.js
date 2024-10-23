@@ -1,9 +1,10 @@
 function getLittleContainer(pokemon, img_URL, types) {
+    let capitalizedName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
     return `
-        <div class="pokemon_container_little" onclick="toggle_overlay(); renderBigContainer(${pokemon.Id}, '${pokemon.name}', ['${types.join("','")}']);">
+        <div class="pokemon_container_little" onclick="toggle_overlay(); renderBigContainer(${pokemon.Id}, '${capitalizedName}', ['${types.join("','")}']);">
             <div class="id_and_name">
                 <p class="pokemon_id">#${pokemon.Id}</p>
-                <h3 class="pokemon_name">${pokemon.name}</h3>
+                <h3 class="pokemon_name">${capitalizedName}</h3>
             </div>
             <div class="img_little bg_${types[0]}">
                 <img src="${img_URL}${pokemon.Id}.png" alt="${pokemon.name}">
@@ -15,7 +16,7 @@ function getLittleContainer(pokemon, img_URL, types) {
     `;
 }
 
-function getBigContainer(pokemonId, pokemonName, types) {
+function getBigContainer(pokemonId, capitalizedName, types) {
     let mainInfo = 1;
     let statsInfo = 2;
     let EvoChain = 3;
@@ -24,10 +25,10 @@ function getBigContainer(pokemonId, pokemonName, types) {
     <div class="pokemon_container_big" onclick="event.stopPropagation()">
         <div class="id_and_name_big">
             <p class="pokemon_id_big">#${pokemonId}</p>
-            <h2 class="pokemon_name_big">${pokemonName}</h2>
+            <h2 class="pokemon_name_big">${capitalizedName}</h2>
         </div>
         <div class="img_big bg_${types[0]}">
-            <img src="${img_URL}${pokemonId}.png" alt="${pokemonName}">
+            <img src="${img_URL}${pokemonId}.png" alt="${capitalizedName}">
         </div>
         <div class="actual_pokemon_type_big">
             ${getTypeImages(types)}

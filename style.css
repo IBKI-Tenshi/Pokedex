@@ -76,11 +76,14 @@ header {
 .img_little {
     height: 60%;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .img_little img {
-    height: 100%;
-    width: 100%;
+    height: 160px;
+    width: 160px;
 }
 
 .actual_pokemon_type {
