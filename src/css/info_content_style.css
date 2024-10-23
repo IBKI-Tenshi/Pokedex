@@ -1,0 +1,96 @@
+.info_content {
+    width: 100%;
+    height: 40%;
+    background-color: rgb(33, 147, 209);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info_table {
+    width: 100%;
+    height: 100%;
+    padding: 0 8px;
+
+    background-color: rgb(29, 94, 94);
+}
+
+.stat-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    margin: 8px;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-bar {
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    height: 20px; /* Höhe des Balkens */
+    position: relative;
+}
+
+.stat-fill {
+    background-color: #76c7c0; /* Farbe des gefüllten Balkens */
+    height: 100%;
+    position: relative;
+}
+
+.stat-value {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white; /* Schriftfarbe der Zahl */
+    font-weight: bold;
+}
+
+
+
+
+.evoChainImgDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.evoChainImgDiv img {
+    height: 100px;
+    width: 100px;
+}
+
+#all_evo_div {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+#base_evo_div {
+    height: 100%;
+    width: 30%;
+}
+
+#base_evo_div img {
+    height: 100px;
+    width: 100px;
+}
+
+#first_evo_options {
+    height: 100%;
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#first_evo_options img {
+    height: 60px;
+    width: 60px;
+}

@@ -87,44 +87,56 @@ function getInfoContentMain(height, weight, baseExperience, abilities) {
 
 function getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed) {
     return `
-    <div class="stats_container">
-        <div class="stat">
-            <p>HP</p>
-            <div class="progress-bar">
-                <div class="filler" style="width: ${HP}%;"><span>${HP}</span></div>
+        <div class="stat-container">
+            <div class="stat">
+                <span>HP</span>
+                <div class="stat-bar">
+                    <div class="stat-fill" style="width: ${HP}%;">
+                        <span class="stat-value">${HP}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="stat">
+                <span>Attack</span>
+                <div class="stat-bar">
+                    <div class="stat-fill" style="width: ${ATK}%;">
+                        <span class="stat-value">${ATK}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="stat">
+                <span>Defense</span>
+                <div class="stat-bar">
+                    <div class="stat-fill" style="width: ${DEF}%;">
+                        <span class="stat-value">${DEF}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="stat">
+                <span>Special-Attack</span>
+                <div class="stat-bar">
+                    <div class="stat-fill" style="width: ${specATK}%;">
+                        <span class="stat-value">${specATK}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="stat">
+                <span>Special-Defense</span>
+                <div class="stat-bar">
+                    <div class="stat-fill" style="width: ${specDEF}%;">
+                        <span class="stat-value">${specDEF}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="stat">
+                <span>Speed</span>
+                <div class="stat-bar">
+                    <div class="stat-fill" style="width: ${Speed}%;">
+                        <span class="stat-value">${Speed}</span>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="stat">
-            <p>Attack</p>
-            <div class="progress-bar">
-                <div class="filler" style="width: ${ATK}%;"><span>${ATK}</span></div>
-            </div>
-        </div>
-        <div class="stat">
-            <p>Defense</p>
-            <div class="progress-bar">
-                <div class="filler" style="width: ${DEF}%;"><span>${DEF}</span></div>
-            </div>
-        </div>
-        <div class="stat">
-            <p>Special Attack</p>
-            <div class="progress-bar">
-                <div class="filler" style="width: ${specATK}%;"><span>${specATK}</span></div>
-            </div>
-        </div>
-        <div class="stat">
-            <p>Special Defense</p>
-            <div class="progress-bar">
-                <div class="filler" style="width: ${specDEF}%;"><span>${specDEF}</span></div>
-            </div>
-        </div>
-        <div class="stat">
-            <p>Speed</p>
-            <div class="progress-bar">
-                <div class="filler" style="width: ${Speed}%;"><span>${Speed}</span></div>
-            </div>
-        </div>
-    </div>
     `;
 }
 
