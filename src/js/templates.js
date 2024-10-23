@@ -3,7 +3,7 @@ function getLittleContainer(pokemon, img_URL, types) {
     return `
         <div class="pokemon_container_little" onclick="toggle_overlay(); renderBigContainer(${pokemon.Id}, '${capitalizedName}', ['${types.join("','")}']);">
             <div class="id_and_name">
-                <p class="pokemon_id">#${pokemon.Id}</p>
+                <h3 class="pokemon_id">#${pokemon.Id}</h3>
                 <h3 class="pokemon_name">${capitalizedName}</h3>
             </div>
             <div class="img_little bg_${types[0]}">
@@ -22,9 +22,12 @@ function getBigContainer(pokemonId, capitalizedName, types) {
     let EvoChain = 3;
 
     return `
+    <a class="arrow" onclick="event.stopPropagation(); previousPokemon(${pokemonId})">
+        <img src="./assets/icons/arrow-left.png">
+    </a>
     <div class="pokemon_container_big" onclick="event.stopPropagation()">
         <div class="id_and_name_big">
-            <p class="pokemon_id_big">#${pokemonId}</p>
+            <h2 class="pokemon_id_big">#${pokemonId}</h2>
             <h2 class="pokemon_name_big">${capitalizedName}</h2>
         </div>
         <div class="img_big bg_${types[0]}">
@@ -35,24 +38,23 @@ function getBigContainer(pokemonId, capitalizedName, types) {
         </div>
         <div class="info_menu">
             <a class="info_menu_button" onclick="renderInfoContent(${pokemonId - 1}, ${mainInfo})">
-                <h4>main</h4>
+                <h4>Main</h4>
             </a>
             <a class="info_menu_button border_l_r" onclick="renderInfoContent(${pokemonId - 1}, '${statsInfo}')">
-                <h4>stats</h4>
+                <h4>Stats</h4>
             </a>
             <a class="info_menu_button"  onclick="renderInfoContent(${pokemonId - 1}, '${EvoChain}')">
-                <h4>evo chain</h4>
+                <h4>Evo chain</h4>
             </a>
         </div>
         <div class="info_content" id="info_content">
             aaa
             {getInfoContent()}
         </div>
-        <div class="back_next_buttons_div">
-            <a class="toggle_pokemon_button" onclick="previousPokemon(${pokemonId})">back</a>
-            <a class="toggle_pokemon_button" onclick="nextPokemon(${pokemonId})">next</a>
-        </div>
     </div>
+    <a class="arrow" onclick="event.stopPropagation(); nextPokemon(${pokemonId})">
+        <img src="./assets/icons/arrow-right.png">
+    </a>
     `;
 }
 
@@ -85,32 +87,44 @@ function getInfoContentMain(height, weight, baseExperience, abilities) {
 
 function getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed) {
     return `
-        <table class="info_table">
-        <tr>
-            <td>HP</td>
-            <td>${HP}</td>
-        </tr>
-        <tr>
-            <td>Attack</td>
-            <td>${ATK}</td>
-        </tr>
-        <tr>
-            <td>Defense</td>
-            <td>${DEF}</td>
-        </tr>
-                <tr>
-            <td>Special-Attack</td>
-            <td>${specATK}</td>
-        </tr>
-        <tr>
-            <td>Special-Defense</td>
-            <td>${specDEF}</td>
-        </tr>
-        <tr>
-            <td>Speed</td>
-            <td>${Speed}</td>
-        </tr>
-    </table>
+    <div class="stats_container">
+        <div class="stat">
+            <p>HP</p>
+            <div class="progress-bar">
+                <div class="filler" style="width: ${HP}%;"><span>${HP}</span></div>
+            </div>
+        </div>
+        <div class="stat">
+            <p>Attack</p>
+            <div class="progress-bar">
+                <div class="filler" style="width: ${ATK}%;"><span>${ATK}</span></div>
+            </div>
+        </div>
+        <div class="stat">
+            <p>Defense</p>
+            <div class="progress-bar">
+                <div class="filler" style="width: ${DEF}%;"><span>${DEF}</span></div>
+            </div>
+        </div>
+        <div class="stat">
+            <p>Special Attack</p>
+            <div class="progress-bar">
+                <div class="filler" style="width: ${specATK}%;"><span>${specATK}</span></div>
+            </div>
+        </div>
+        <div class="stat">
+            <p>Special Defense</p>
+            <div class="progress-bar">
+                <div class="filler" style="width: ${specDEF}%;"><span>${specDEF}</span></div>
+            </div>
+        </div>
+        <div class="stat">
+            <p>Speed</p>
+            <div class="progress-bar">
+                <div class="filler" style="width: ${Speed}%;"><span>${Speed}</span></div>
+            </div>
+        </div>
+    </div>
     `;
 }
 

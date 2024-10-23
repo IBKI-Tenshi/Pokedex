@@ -22,6 +22,7 @@ header {
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-left: 16px;
 }
 
 #title_div img {
@@ -32,6 +33,7 @@ header {
 
 #search_bar {
     margin: 8px;
+    margin-right: 16px;
     height: 24px;
     border-radius: 5px;
 }

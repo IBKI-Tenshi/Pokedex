@@ -4,6 +4,8 @@ async function init() {
     await renderLittleContainer(actualShownPokemon);
 }
 
+document.addEventListener("DOMContentLoaded", initializeSearch); // Ruft die Initialisierungsfunktion auf, sobald die Seite geladen ist
+
 async function loadData(path) { // Lade Pokémon-Daten
     let data = await fetch(BASE_URL + path + ".json");
     let dataToJson = await data.json();
@@ -171,10 +173,8 @@ async function expandShownPokemon() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", initializeSearch); // Ruft die Initialisierungsfunktion auf, sobald die Seite geladen ist
-
 async function initializeSearch() {
-    let searchBar = document.getElementById("searchBar");
+    let searchBar = document.getElementById("search_bar");
     let loadMoreButton = document.querySelector(".load_more_button"); // Den Button auswählen
 
     searchBar.addEventListener("input", function () {
