@@ -66,19 +66,19 @@ function getInfoContentMain(height, weight, baseExperience, abilities) {
     return `
         <table class="info_table">
         <tr>
-            <td>Height</td>
+            <td>Height:</td>
             <td>${height}</td>
         </tr>
         <tr>
-            <td>Weight</td>
+            <td>Weight:</td>
             <td>${weight}</td>
         </tr>
         <tr>
-            <td>Base Experience</td>
+            <td>Base Experience:</td>
             <td>${baseExperience}</td>
         </tr>
         <tr>
-            <td>Abilities</td>
+            <td>Abilities:</td>
             <td>${abilities}</td>
         </tr>
     </table>
@@ -89,7 +89,7 @@ function getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed) {
     return `
         <div class="stat-container">
             <div class="stat">
-                <span>HP</span>
+                <span>HP:</span>
                 <div class="stat-bar">
                     <div class="stat-fill" style="width: ${HP}%;">
                         <span class="stat-value">${HP}</span>
@@ -97,7 +97,7 @@ function getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed) {
                 </div>
             </div>
             <div class="stat">
-                <span>Attack</span>
+                <span>Attack:</span>
                 <div class="stat-bar">
                     <div class="stat-fill" style="width: ${ATK}%;">
                         <span class="stat-value">${ATK}</span>
@@ -105,7 +105,7 @@ function getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed) {
                 </div>
             </div>
             <div class="stat">
-                <span>Defense</span>
+                <span>Defense:</span>
                 <div class="stat-bar">
                     <div class="stat-fill" style="width: ${DEF}%;">
                         <span class="stat-value">${DEF}</span>
@@ -113,7 +113,7 @@ function getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed) {
                 </div>
             </div>
             <div class="stat">
-                <span>Special-Attack</span>
+                <span>Special-Attack:</span>
                 <div class="stat-bar">
                     <div class="stat-fill" style="width: ${specATK}%;">
                         <span class="stat-value">${specATK}</span>
@@ -121,7 +121,7 @@ function getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed) {
                 </div>
             </div>
             <div class="stat">
-                <span>Special-Defense</span>
+                <span>Special-Defense:</span>
                 <div class="stat-bar">
                     <div class="stat-fill" style="width: ${specDEF}%;">
                         <span class="stat-value">${specDEF}</span>
@@ -129,7 +129,7 @@ function getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed) {
                 </div>
             </div>
             <div class="stat">
-                <span>Speed</span>
+                <span>Speed:</span>
                 <div class="stat-bar">
                     <div class="stat-fill" style="width: ${Speed}%;">
                         <span class="stat-value">${Speed}</span>
@@ -182,9 +182,13 @@ function getInfoContentDuoEvo(imgPathBaseEvo, imgPathFirstEvo, imgPathSecondEvo)
     return `  
         <div class="evoChainImgDiv">
             <img src="${imgPathBaseEvo}" alt="">
-            <div>>></div>
+            <div class="evolves_to_arrow">
+                <img src="./assets/icons/arrow-right.png">
+            </div>
             <img src="${imgPathFirstEvo}" alt="">
-            <div>>></div>
+            <div class="evolves_to_arrow">
+                <img src="./assets/icons/arrow-right.png">
+            </div>
             <img src="${imgPathSecondEvo}" alt="">
         </div>
     `;

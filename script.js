@@ -10,6 +10,7 @@ async function loadData(path) { // Lade Pokémon-Daten
     let data = await fetch(BASE_URL + path + ".json");
     let dataToJson = await data.json();
     return dataToJson.results;
+    
 }
 
 async function loadActualShownPokemon() { // Pokémon- und Typ-Daten laden
@@ -145,10 +146,10 @@ function nextPokemon(pokemonId) {
 function showPokemonInOverlay(index) {
     let selectedPokemon = actualShownPokemon[index];
     let pokemonId = selectedPokemon.url.split("/")[6];
-    let pokemonName = selectedPokemon.name;
-    let types = selectedPokemon.types; // Typen direkt aus dem Pokémon-Objekt laden
+    let capitalizedName = selectedPokemon.name.charAt(0).toUpperCase() + selectedPokemon.name.slice(1);
+    let types = selectedPokemon.types;
 
-    renderBigContainer(pokemonId, pokemonName, types);
+    renderBigContainer(pokemonId, capitalizedName, types);
 }
 
 async function loadMore() {
