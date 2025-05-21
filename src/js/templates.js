@@ -44,7 +44,7 @@ function getBigContainer(pokemonId, capitalizedName, types) {
                 <h4>Stats</h4>
             </a>
             <a class="info_menu_button"  onclick="renderInfoContent(${pokemonId - 1}, '${EvoChain}')">
-                <h4>Evo chain</h4>
+                <h4>Evo</h4>
             </a>
         </div>
         <div class="info_content" id="info_content">
@@ -142,7 +142,7 @@ function getInfoContentStats(HP, ATK, DEF, specATK, specDEF, Speed) {
 
 function getInfoContentNoEvo(imgPath) {
     return `
-    <div class="evoChainImgDiv">
+    <div class="evoChainImgDiv_noEvo">
         <img src="${imgPath}" alt="">
     </div>
     `;
@@ -153,6 +153,9 @@ function getFirstStageContainer(imgPathBaseEvo) {
         <div id="all_evo_div">
             <div id="base_evo_div">
                 <img src="${imgPathBaseEvo}" alt="">
+            </div>
+            <div class="evolves_to_arrow">
+                <img src="./assets/icons/arrow-right.png">
             </div>
             <div id="first_evo_options">
             </div>
@@ -172,7 +175,9 @@ function getInfoContentOneEvo(imgPathBaseEvo, imgPathFirstEvo) {
     return `
         <div class="evoChainImgDiv">
             <img src="${imgPathBaseEvo}" alt="">
-            <div>>></div>
+            <div class="evolves_to_arrow">
+                <img src="./assets/icons/arrow-right.png">
+            </div>
             <img src="${imgPathFirstEvo}" alt="">
         </div>
     `;

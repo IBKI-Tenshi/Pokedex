@@ -15,7 +15,7 @@ async function loadData(path) { // Lade Pokémon-Daten
 
 async function loadActualShownPokemon() { // Pokémon- und Typ-Daten laden
     let allPokemon = await loadData("pokemon?limit=100000&offset=0");
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 40; i++) {
         actualShownPokemon.push(allPokemon[i]);
         await loadPokemonTypes(allPokemon[i].url);  // Typen für jedes Pokémon laden
     }
@@ -156,12 +156,17 @@ async function loadMore() {
     if (isLoading) return;  // Wenn bereits geladen wird, nichts tun
     isLoading = true;  // Ladevorgang starten
 
-    await expandShownPokemon()
+    document.getElementById('loadingSpinner').style.display = 'block';  // Spinner einblenden
+
+    await expandShownPokemon();
     await loadIdInArray();
     renderLittleContainer(actualShownPokemon);
 
+    document.getElementById('loadingSpinner').style.display = 'none';  // Spinner ausblenden
+
     isLoading = false;  // Ladevorgang abgeschlossen
 }
+
 
 async function expandShownPokemon() {
     let allPokemon = await loadData("pokemon?limit=100000&offset=0");

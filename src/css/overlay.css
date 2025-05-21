@@ -92,6 +92,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    font-size: larger;
 }
 
 .info_menu_button {

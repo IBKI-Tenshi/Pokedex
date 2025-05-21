@@ -38,15 +38,19 @@
     </header>
 
     <div id="all_content">
-
     </div>
 
     <a onclick="loadMore()" class="load_more_button">
-        lade mehr pokemon
+        <p>
+            load more
+        </p>
     </a>
 
-    <div id="overlay" class="d_none" onclick="toggle_overlay()">
+    <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+        <img src="./assets/img/pokeball.png" alt="Loading...">
+    </div>
 
+    <div id="overlay" class="d_none" onclick="toggle_overlay()">
     </div>
 
 
