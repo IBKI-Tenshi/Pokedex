@@ -1,7 +1,15 @@
 async function init() {
+    if (isLoading) return;  // Wenn bereits geladen wird, nichts tun
+    isLoading = true;  // Ladevorgang starten
+
+    document.getElementById('loadingSpinner').style.display = 'block'; // Spinner anzeigen
+
     await loadData("pokemon?limit=100000&offset=0");
     await loadActualShownPokemon();
     await renderLittleContainer(actualShownPokemon);
+
+    document.getElementById('loadingSpinner').style.display = 'none'; // Spinner ausblenden
+    isLoading = false;  // Ladevorgang abgeschlossen
 }
 
 document.addEventListener("DOMContentLoaded", initializeSearch); // Ruft die Initialisierungsfunktion auf, sobald die Seite geladen ist
@@ -10,12 +18,11 @@ async function loadData(path) { // Lade Pokémon-Daten
     let data = await fetch(BASE_URL + path + ".json");
     let dataToJson = await data.json();
     return dataToJson.results;
-    
 }
 
 async function loadActualShownPokemon() { // Pokémon- und Typ-Daten laden
     let allPokemon = await loadData("pokemon?limit=100000&offset=0");
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 20; i++) {
         actualShownPokemon.push(allPokemon[i]);
         await loadPokemonTypes(allPokemon[i].url);  // Typen für jedes Pokémon laden
     }
@@ -181,23 +188,29 @@ async function expandShownPokemon() {
 
 async function initializeSearch() {
     let searchBar = document.getElementById("search_bar");
-    let loadMoreButton = document.querySelector(".load_more_button"); // Den Button auswählen
+    let searchFeedback = document.getElementById("search_feedback"); // Feedback-Container
+    let loadMoreButton = document.querySelector(".load_more_button");
 
     searchBar.addEventListener("input", function () {
         let query = searchBar.value.toLowerCase();
+        searchFeedback.textContent = ''; // Feedback zurücksetzen
+
         if (query.length >= 3) { // Überprüft, ob mindestens 3 Zeichen eingegeben wurden
-            searchedPokemon = actualShownPokemon.filter(pokemon => // Filtert die Pokémon, deren Name mit der eingegebenen Zeichenfolge beginnt
-                pokemon.name.toLowerCase().startsWith(query)); // Überprüft, ob der Name mit der Zeichenfolge beginnt 
-                
+            searchedPokemon = actualShownPokemon.filter(pokemon => 
+                pokemon.name.toLowerCase().startsWith(query)); // Pokémon filtern
+            
             renderLittleContainer(searchedPokemon);
             loadMoreButton.style.display = 'none'; // Button ausblenden, wenn 3 oder mehr Zeichen eingegeben werden
 
+            if (searchedPokemon.length === 0) { // Wenn keine Pokémon gefunden werden
+                searchFeedback.textContent = "Kein Treffer"; // Nachricht anzeigen
+            }
+
         } else {
             searchedPokemon = []; // Leert das Array, wenn weniger als 3 Zeichen eingegeben werden
-            renderLittleContainer(actualShownPokemon); // aktuell geladene Pokémon anzeigen
+            renderLittleContainer(actualShownPokemon); // Aktuell geladene Pokémon anzeigen
             loadMoreButton.style.display = ''; // Button wieder anzeigen, wenn weniger als 3 Zeichen eingegeben werden
+            searchFeedback.textContent = "Bitte min. 3 Buchstaben eintragen"; // Nachricht anzeigen
         }
     });
 }
-
-
